@@ -1,0 +1,175 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+        weather: {
+          sunny: "#FFD700",
+          cloudy: "#87CEEB",
+          rainy: "#4682B4",
+          snowy: "#F0F8FF",
+          stormy: "#2F4F4F",
+          night: "#191970",
+          "clear-day": "#87CEEB",
+          "clear-night": "#191970",
+          "partly-cloudy": "#B0C4DE",
+          overcast: "#696969",
+          drizzle: "#4169E1",
+          "heavy-rain": "#1E90FF",
+          snow: "#FFFAFA",
+          fog: "#D3D3D3",
+          wind: "#20B2AA",
+          hot: "#FF4500",
+          cold: "#6495ED",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Poppins", "system-ui", "sans-serif"],
+        body: ["Open Sans", "system-ui", "sans-serif"],
+      },
+      spacing: {
+        18: "4.5rem",
+        22: "5.5rem",
+        26: "6.5rem",
+        30: "7.5rem",
+      },
+      fontSize: {
+        "2xs": "0.625rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem",
+        "5xl": "3rem",
+        "6xl": "3.75rem",
+        "7xl": "4.5rem",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-up": {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
+        },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "bounce-gentle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "weather-float": {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "50%": { transform: "translateY(-20px) rotate(5deg)" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.6s ease-out",
+        "slide-up": "slide-up 0.5s ease-out",
+        "pulse-slow": "pulse-slow 3s ease-in-out infinite",
+        "spin-slow": "spin-slow 4s linear infinite",
+        "bounce-gentle": "bounce-gentle 2s ease-in-out infinite",
+        "weather-float": "weather-float 6s ease-in-out infinite",
+      },
+      backgroundImage: {
+        "sunny-gradient": "linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6347 100%)",
+        "clear-day-gradient": "linear-gradient(135deg, #87CEEB 0%, #98D8E8 50%, #87CEEB 100%)",
+        "clear-night-gradient": "linear-gradient(135deg, #191970 0%, #483D8B 50%, #6A5ACD 100%)",
+        "cloudy-gradient": "linear-gradient(135deg, #B0C4DE 0%, #87CEEB 50%, #778899 100%)",
+        "overcast-gradient": "linear-gradient(135deg, #696969 0%, #808080 50%, #A9A9A9 100%)",
+        "rainy-gradient": "linear-gradient(135deg, #4682B4 0%, #5F9EA0 50%, #4169E1 100%)",
+        "heavy-rain-gradient": "linear-gradient(135deg, #1E90FF 0%, #0000CD 50%, #191970 100%)",
+        "snowy-gradient": "linear-gradient(135deg, #F0F8FF 0%, #E6E6FA 50%, #D3D3D3 100%)",
+        "stormy-gradient": "linear-gradient(135deg, #2F4F4F 0%, #2E2E2E 50%, #000000 100%)",
+        "fog-gradient": "linear-gradient(135deg, #D3D3D3 0%, #C0C0C0 50%, #A9A9A9 100%)",
+        "hot-gradient": "linear-gradient(135deg, #FF4500 0%, #FF6347 50%, #FFD700 100%)",
+        "cold-gradient": "linear-gradient(135deg, #6495ED 0%, #4682B4 50%, #87CEEB 100%)",
+        "default-gradient": "linear-gradient(135deg, #87CEEB 0%, #98D8E8 50%, #87CEEB 100%)",
+      },
+      boxShadow: {
+        weather: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        "weather-hover": "0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
+        "inner-light": "inset 0 2px 4px 0 rgba(255, 255, 255, 0.1)",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+};
