@@ -1,24 +1,20 @@
+// weatherApi.js
 
-// OpenWeatherMap API service
-
-const API_KEY = 'c27e9d7110f1c08371ffdf21108c7392'; // User's personal API key
+const API_KEY = 'c27e9d7110f1c08371ffdf21108c7392';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
 /**
- * Fetches current weather data for a city
- * @param {string} city - City name to get weather for
- * @returns {Promise} - Weather data
+ * Fetch current weather data
+ * @param {string} city - City name
+ * @returns {Promise}
  */
 export const fetchCurrentWeather = async (city) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
+      `${BASE_URL}/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
     );
-    
-    if (!response.ok) {
-      throw new Error('City not found or API error');
-    }
-    
+
+    if (!response.ok) throw new Error('City not found or API error');
     return await response.json();
   } catch (error) {
     console.error('Error fetching current weather:', error);
@@ -27,20 +23,17 @@ export const fetchCurrentWeather = async (city) => {
 };
 
 /**
- * Fetches 5-day forecast data for a city
- * @param {string} city - City name to get forecast for
- * @returns {Promise} - Forecast data
+ * Fetch 5-day weather forecast
+ * @param {string} city - City name
+ * @returns {Promise}
  */
 export const fetchForecast = async (city) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`
+      `${BASE_URL}/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
     );
-    
-    if (!response.ok) {
-      throw new Error('City not found or API error');
-    }
-    
+
+    if (!response.ok) throw new Error('City not found or API error');
     return await response.json();
   } catch (error) {
     console.error('Error fetching forecast:', error);
@@ -49,85 +42,51 @@ export const fetchForecast = async (city) => {
 };
 
 /**
- * Gets the appropriate weather icon based on the weather condition
- * @param {string} weatherCode - Weather condition code from API
- * @param {boolean} isDay - Whether it's daytime or nighttime
- * @returns {string} - Icon name for Lucide icons
+ * Fetch city suggestions using OpenWeather Geocoding API
+ * @param {string} query - Partial city name
+ * @returns {Promise<Array>}
+ */
+export const fetchCitySuggestions = async (query) => {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(query)}&limit=5&appid=${API_KEY}`
+    );
+
+    if (!response.ok) throw new Error('Error fetching suggestions');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching city suggestions:', error);
+    return [];
+  }
+};
+
+/**
+ * Get appropriate weather icon
+ * @param {number} weatherCode
+ * @param {boolean} isDay
+ * @returns {string}
  */
 export const getWeatherIcon = (weatherCode, isDay = true) => {
-  // Weather condition code ranges as per OpenWeatherMap API
-  // https://openweathermap.org/weather-conditions
-  
-  // Thunderstorm: 200-299
-  if (weatherCode >= 200 && weatherCode < 300) {
-    return 'cloud-lightning';
-  }
-  
-  // Drizzle and Rain: 300-599
-  if (weatherCode >= 300 && weatherCode < 600) {
-    return 'cloud-rain';
-  }
-  
-  // Snow: 600-699
-  if (weatherCode >= 600 && weatherCode < 700) {
-    return 'cloud-snow';
-  }
-  
-  // Atmosphere (fog, mist, etc): 700-799
-  if (weatherCode >= 700 && weatherCode < 800) {
-    return 'cloudy';
-  }
-  
-  // Clear: 800
-  if (weatherCode === 800) {
-    return isDay ? 'sun' : 'moon';
-  }
-  
-  // Clouds: 801-899
-  if (weatherCode > 800) {
-    return isDay ? 'cloud-sun' : 'cloud';
-  }
-  
-  // Default
+  if (weatherCode >= 200 && weatherCode < 300) return 'cloud-lightning';
+  if (weatherCode >= 300 && weatherCode < 600) return 'cloud-rain';
+  if (weatherCode >= 600 && weatherCode < 700) return 'cloud-snow';
+  if (weatherCode >= 700 && weatherCode < 800) return 'cloudy';
+  if (weatherCode === 800) return isDay ? 'sun' : 'moon';
+  if (weatherCode > 800) return isDay ? 'cloud-sun' : 'cloud';
   return 'cloud';
 };
 
 /**
- * Gets background gradient class based on weather condition
- * @param {string} weatherCode - Weather condition code from API
- * @returns {string} - Tailwind class for background
+ * Get background gradient class based on weather code
+ * @param {number} weatherCode
+ * @returns {string}
  */
 export const getWeatherBackground = (weatherCode) => {
-  // Thunderstorm: 200-299
-  if (weatherCode >= 200 && weatherCode < 300) {
-    return 'bg-stormy-gradient';
-  }
-  
-  // Drizzle and Rain: 300-599
-  if (weatherCode >= 300 && weatherCode < 600) {
-    return 'bg-rainy-gradient';
-  }
-  
-  // Snow: 600-699
-  if (weatherCode >= 600 && weatherCode < 700) {
-    return 'bg-snowy-gradient';
-  }
-  
-  // Atmosphere (fog, mist, etc): 700-799
-  if (weatherCode >= 700 && weatherCode < 800) {
-    return 'bg-cloudy-gradient';
-  }
-  
-  // Clear: 800
-  if (weatherCode === 800) {
-    return 'bg-sunny-gradient';
-  }
-  
-  // Clouds: 801-899
-  if (weatherCode > 800) {
-    return 'bg-cloudy-gradient';
-  }
-  
-  // Default
+  if (weatherCode >= 200 && weatherCode < 300) return 'bg-stormy-gradient';
+  if (weatherCode >= 300 && weatherCode < 600) return 'bg-rainy-gradient';
+  if (weatherCode >= 600 && weatherCode < 700) return 'bg-snowy-gradient';
+  if (weatherCode >= 700 && weatherCode < 800) return 'bg-cloudy-gradient';
+  if (weatherCode === 800) return 'bg-sunny-gradient';
+  if (weatherCode > 800) return 'bg-cloudy-gradient';
   return 'bg-sunny-gradient';
 };
